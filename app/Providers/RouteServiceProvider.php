@@ -65,7 +65,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        Route::domain('api.laravel.local')
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
