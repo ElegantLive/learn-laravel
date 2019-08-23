@@ -18,3 +18,5 @@ use Illuminate\Http\Request;
 //});
 
 Route::post('/user/id', 'User@create');
+Route::get('/user/list', 'User@list');
+Route::get('/user/detail', 'User@detail');
