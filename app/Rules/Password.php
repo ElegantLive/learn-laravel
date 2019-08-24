@@ -25,7 +25,7 @@ class Password implements Rule
      */
     public function passes($attribute, $value)
     {
-        $reg = '^[a-zA-Z]\w{5,17}$';
+        $reg = '^[a-zA-Z]\w{5,17}$^';
 
         if(preg_match($reg,$value)) return true;
 

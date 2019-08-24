@@ -21,7 +21,8 @@ class CreatePeopleTable extends Migration
             $table->string('email')->nullable();
             $table->char('password', 32);
             $table->string('real_name')->nullable();
-            $table->timestamps();
+            $table->integer('created_at')->nullable();
+            $table->integer('updated_at')->nullable();
         });
 
     }

@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ValidationException) {
             $defaultJson['errorCode'] = (new ParameterException())->getErrorCode();
-            $defaultJson['message'] = $exception->getMessage();
+            $defaultJson['message'] = $exception->errors()[key($exception->errors())][0];
             $defaultJson['data'] = $exception->errors();
 
             return Response::json($defaultJson, $exception->status);
