@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use Dotenv\Exception\ValidationException;
+use Illuminate\Validation\ValidationException;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Response;
@@ -71,7 +71,7 @@ class Handler extends ExceptionHandler
             $defaultJson['message'] = $exception->getMessage();
             $defaultJson['data'] = $exception->getErrorData();
 
-            return Response::json($defaultJson, $exception->getCode());
+            return Response::json($defaultJson, $exception->getStatus());
         }
 
         if (config('app.debug')) {

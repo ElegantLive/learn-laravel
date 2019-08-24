@@ -19,8 +19,8 @@ Route::post('user/id', 'User@create');
 Route::get('user/list', 'User@list');
 Route::get('user/detail', 'User@detail');
 
-Route::post('person/test', 'Person@test');
-Route::post('person', 'Person@create');
+Route::post('person/test', 'Person@tests');
+Route::post('person', 'Person@test');
 
 Route::fallback(function () {
     throw new \App\Exceptions\MissException();
