@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +15,13 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::post('/user/id', 'User@create');
-Route::get('/user/list', 'User@list');
-Route::get('/user/detail', 'User@detail');
+Route::post('user/id', 'User@create');
+Route::get('user/list', 'User@list');
+Route::get('user/detail', 'User@detail');
+
+Route::post('person/test', 'Person@test');
+Route::post('person', 'Person@create');
+
+Route::fallback(function () {
+    throw new \App\Exceptions\MissException();
+});
