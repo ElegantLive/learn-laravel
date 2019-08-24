@@ -16,7 +16,7 @@ namespace App\Exceptions;
  */
 class ParameterException extends BaseException
 {
-    protected $code = 400;
+    protected $status = 400;
     protected $errorCode = 10000;
     protected $message = "参数错误";
 }

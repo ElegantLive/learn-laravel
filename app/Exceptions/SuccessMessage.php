@@ -16,7 +16,7 @@ namespace App\Exceptions;
  */
 class SuccessMessage extends BaseException
 {
-    protected $code = 200;
+    protected $status = 200;
     protected $message = 'OK';
     protected $errorCode = 0;
 }

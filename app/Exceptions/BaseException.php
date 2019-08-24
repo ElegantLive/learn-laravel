@@ -17,7 +17,7 @@ class BaseException extends Exception
      * 返回的http状态码
      * @var int
      */
-    protected $code = 200;
+    protected $status = 200;
 
     /**
      * 错误信息
@@ -48,16 +48,16 @@ class BaseException extends Exception
     /**
      * BaseException constructor.
      * @param array $errorData
-     * @param int $code
+     * @param int $status
      * @param Throwable|null $previous
      */
-    public function __construct(array $errorData = [], int $code = 0, Throwable $previous = null)
+    public function __construct(array $errorData = [], int $status = 0, Throwable $previous = null)
     {
         foreach ($this->accessKey as $key => $value) {
             if (array_key_exists($value, $errorData)) $this->$value = $errorData[$value];
         }
 
-        if ($code) $this->code = $code;
+        if ($status) $this->status = $status;
 
         return parent::__construct($this->message, $this->code, $previous);
     }
@@ -70,5 +70,10 @@ class BaseException extends Exception
     final public function getErrorData()
     {
         return $this->data;
+    }
+
+    final public function getStatus()
+    {
+        return $this->status;
     }
 }

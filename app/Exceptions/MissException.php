@@ -16,7 +16,7 @@ namespace App\Exceptions;
  */
 class MissException extends BaseException
 {
-    protected $code = 404;
+    protected $status = 404;
     protected $errorCode = 998;
     protected $message = 'Missing data';
 }
