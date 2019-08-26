@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\MissException;
-use App\Exceptions\ParameterException;
 use App\Exceptions\SuccessMessage;
 use App\Http\Requests\PersonCreate;
 use App\Http\Validate\PersonValidate;
@@ -21,9 +20,9 @@ class Person extends Controller
      */
     public function test(Request $request)
     {
-        (new PersonValidate($request))->check();
+        $data = (new PersonValidate($request))->check();
 
-        throw new SuccessMessage();
+        throw new SuccessMessage(['data' => $data]);
     }
 
     /**

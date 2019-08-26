@@ -67,5 +67,7 @@ class BaseValidate
                 'message' => $this->message
             ]);
         }
+
+        return $validator->validate();
     }
 }

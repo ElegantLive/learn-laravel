@@ -24,6 +24,9 @@ Route::post('token', 'Token@getToken');
 Route::get('person', 'Person@info');
 Route::post('logout', 'Token@logout');
 
+Route::post('person/test', 'Person@test');
+Route::put('person/tests', 'Person@tests');
+
 Route::fallback(function () {
     throw new \App\Exceptions\MissException();
 });

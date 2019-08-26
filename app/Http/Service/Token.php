@@ -108,11 +108,9 @@ class Token
      */
     public static function authentication(Request $request, int $scope)
     {
-        if (empty($token)) throw new ParameterException();
-
         if (in_array($scope, [16, 32, 64]) == false) throw new ParameterException();
 
-        $scopeVal = self::getCurrentTokenVar($token, 'scope');
+        $scopeVal = self::getCurrentTokenVar($request, 'scope');
         if (empty($scopeVal)) throw new TokenException();
 
         if ($scope != $scopeVal) throw new ForbiddenException();
