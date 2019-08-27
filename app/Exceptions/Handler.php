@@ -2,13 +2,20 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
+    protected $statusCode = 500;
+    protected $errorCode = 999;
+    protected $message = '服务器异常';
+    protected $data = [];
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -51,33 +58,51 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        $defaultJson = [
-            'errorCode' => 999,
-            'message' => '服务器异常',
-            'data' => [],
-            'requestUrl' => $request->path()
-        ];
-
         if ($exception instanceof ValidationException) {
-            $defaultJson['errorCode'] = (new ParameterException())->getErrorCode();
-            $defaultJson['message'] = $exception->errors()[key($exception->errors())][0];
-            $defaultJson['data'] = $exception->errors();
+            $this->message = $exception->errors()[key($exception->errors())][0];
+            $this->errorCode = (new ParameterException())->getErrorCode();
+            $this->data = $exception->errors();
+            $this->statusCode = $exception->status;
 
-            return Response::json($defaultJson, $exception->status);
+            return $this->prepareResponseJson($request);
         }
 
         if ($exception instanceof BaseException) {
-            $defaultJson['errorCode'] = $exception->getErrorCode();
-            $defaultJson['message'] = $exception->getMessage();
-            $defaultJson['data'] = $exception->getErrorData();
+            $this->errorCode = $exception->getErrorCode();
+            $this->message = $exception->getMessage();
+            $this->data = $exception->getErrorData();
+            $this->statusCode = $exception->getStatus();
 
-            return Response::json($defaultJson, $exception->getStatus());
+            return $this->prepareResponseJson($request);
         }
 
         if (config('app.debug')) {
             return parent::render($request, $exception);
         }
 
-        return Response::json($defaultJson, 500);
+        if ($exception instanceof HttpException) {
+            $this->message = $exception->getMessage();
+            $this->statusCode = $exception->getStatusCode();
+
+            return $this->prepareResponseJson($request);
+        }
+
+        return $this->prepareResponseJson($request);
+    }
+
+    /**
+     * Prepare return json response
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function prepareResponseJson(Request $request)
+    {
+        return Response::json([
+            'message' => $this->message,
+            'data' => $this->data,
+            'errorCode' => $this->errorCode,
+            'requestUrl' => $request->path()
+        ], $this->statusCode);
     }
 }
