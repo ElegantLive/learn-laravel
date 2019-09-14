@@ -18,7 +18,7 @@ class User extends Controller
      * @param Request $request
      * @throws SuccessMessage
      */
-    public function create(Request $request)
+    public function create (Request $request)
     {
 //        $user = new \App\User();
         $request->validate();
@@ -30,10 +30,10 @@ class User extends Controller
     /**
      * 获取用户分页列表
      * @param Request $request
-     * @param Person $person
+     * @param Person  $person
      * @return mixed
      */
-    public function list(Request $request, Person $person)
+    public function list (Request $request, Person $person)
     {
         return $person->where('id', '>', 10)->paginate(1, '*', 'page', 3);
     }
@@ -44,7 +44,7 @@ class User extends Controller
      * @throws MissException
      * @throws SuccessMessage
      */
-    public function detail(Request $request)
+    public function detail (Request $request)
     {
         $info = Person::find(4);
 

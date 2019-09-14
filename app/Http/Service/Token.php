@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Cache;
 
 class Token
 {
-    const USER_SCOPE = 16;
+    const USER_SCOPE  = 16;
     const OTHER_SCOPE = 32;
     const ADMIN_SCOPE = 64;
 
@@ -31,18 +31,20 @@ class Token
      * @throws MissException
      * @throws TokenException
      */
-    public function getToken(array $map = [])
+    public function getToken (array $map = [])
     {
         $map['password'] = md5($map['password']);
 
         $person = Person::where($map)->first();
 
-        if (empty($person) || $person->is) throw new MissException();
+        if (empty($person) || $person->is) {
+            throw new MissException();
+        }
 
         $cache = [
-            'scope' => 8,
+            'scope'     => 8,
             'timestamp' => time(),
-            'id' => $person['id'],
+            'id'        => $person['id'],
         ];
 
         return $this->cacheToken($cache);
@@ -54,7 +56,7 @@ class Token
      * @return string
      * @throws TokenException
      */
-    private function cacheToken(array $value)
+    private function cacheToken (array $value)
     {
         $key = $this->createRandKey();
 
@@ -72,27 +74,33 @@ class Token
      * 清理token
      * @param Request $request
      */
-    public function clearToken(Request $request)
+    public function clearToken (Request $request)
     {
         Cache::store('redis')->forget($request->header('token'));
     }
 
     /**
      * 获取token存储信息
-     * @param Request $request
+     * @param Request     $request
      * @param string|null $key
      * @return mixed
      * @throws TokenException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public static function getCurrentTokenVar(Request $request, string $key = null)
+    public static function getCurrentTokenVar (Request $request, string $key = null)
     {
-        if (empty($key)) throw new TokenException(['message' => 'token找不到']);
+        if (empty($key)) {
+            throw new TokenException(['message' => 'token找不到']);
+        }
 
         $value = Cache::store('redis')->get($request->header('token'));
-        if (empty($value)) throw new TokenException();
+        if (empty($value)) {
+            throw new TokenException();
+        }
 
-        if (array_key_exists($key, $value)) return $value[$key];
+        if (array_key_exists($key, $value)) {
+            return $value[$key];
+        }
 
         throw new TokenException();
     }
@@ -100,27 +108,33 @@ class Token
     /**
      * 校验权限
      * @param Request $request
-     * @param int $scope
+     * @param int     $scope
      * @throws ForbiddenException
      * @throws ParameterException
      * @throws TokenException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public static function authentication(Request $request, int $scope)
+    public static function authentication (Request $request, int $scope)
     {
-        if (in_array($scope, [16, 32, 64]) == false) throw new ParameterException();
+        if (in_array($scope, [16, 32, 64]) == false) {
+            throw new ParameterException();
+        }
 
         $scopeVal = self::getCurrentTokenVar($request, 'scope');
-        if (empty($scopeVal)) throw new TokenException();
+        if (empty($scopeVal)) {
+            throw new TokenException();
+        }
 
-        if ($scope != $scopeVal) throw new ForbiddenException();
+        if ($scope != $scopeVal) {
+            throw new ForbiddenException();
+        }
     }
 
     /**
      * 生成token的key
      * @return string
      */
-    private function createRandKey()
+    private function createRandKey ()
     {
         return Factory::create()->md5;
     }

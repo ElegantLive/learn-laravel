@@ -13,12 +13,11 @@ class Person extends Controller
 {
     /**
      * test for validate
-     *
      * @param Request $request
      * @throws SuccessMessage
      * @throws \App\Exceptions\ParameterException
      */
-    public function test(Request $request)
+    public function test (Request $request)
     {
         $data = (new PersonValidate($request))->check();
 
@@ -27,23 +26,21 @@ class Person extends Controller
 
     /**
      * test for validate
-     *
      * @param PersonCreate $request
      * @throws SuccessMessage
      */
-    public function tests(PersonCreate $request)
+    public function tests (PersonCreate $request)
     {
         throw new SuccessMessage(['data' => $request->validated()]);
     }
 
     /**
      * 用户注册
-     *
      * @param PersonCreate $request
-     * @param PersonModel $person
+     * @param PersonModel  $person
      * @throws SuccessMessage
      */
-    public function create(PersonCreate $request, PersonModel $person)
+    public function create (PersonCreate $request, PersonModel $person)
     {
         $data = $request->validated();
 
@@ -54,14 +51,14 @@ class Person extends Controller
 
     /**
      * 获取自己的信息
-     * @param Request $request
+     * @param Request     $request
      * @param PersonModel $person
      * @throws MissException
      * @throws SuccessMessage
      * @throws \App\Exceptions\TokenException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function info(Request $request, PersonModel $person)
+    public function info (Request $request, PersonModel $person)
     {
         $id = \App\Http\Service\Token::getCurrentTokenVar($request, 'id');
 

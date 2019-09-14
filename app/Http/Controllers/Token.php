@@ -19,14 +19,14 @@ class Token extends Controller
     /**
      * 登录入口
      * @param PersonLogin $request
-     * @param TokenModel $model
+     * @param TokenModel  $model
      * @throws SuccessMessage
      * @throws \App\Exceptions\MissException
      * @throws \App\Exceptions\TokenException
      */
-    public function getToken(PersonLogin $request, TokenModel $model)
+    public function getToken (PersonLogin $request, TokenModel $model)
     {
-        $map = $request->only(['mobile', 'password']);
+        $map   = $request->only(['mobile', 'password']);
         $token = $model->getToken($map);
 
         throw new SuccessMessage([
@@ -36,11 +36,11 @@ class Token extends Controller
 
     /**
      * 退出
-     * @param Request $request
+     * @param Request    $request
      * @param TokenModel $model
      * @throws SuccessMessage
      */
-    public function logout(Request $request, TokenModel $model)
+    public function logout (Request $request, TokenModel $model)
     {
         $model->clearToken($request);
 
