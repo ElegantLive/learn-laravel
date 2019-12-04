@@ -12,11 +12,12 @@ return [
     |
     */
 
-    'supportsCredentials'    => false,
-    'allowedOrigins'         => ['*'],
+    'supportsCredentials' => false,
+    'allowedOrigins' => ['*'],
     'allowedOriginsPatterns' => [],
-    'allowedHeaders'         => ['Content-Type', 'X-Requested-With', 'token', 'Origin', 'Accept', 'current-version'],
-    'allowedMethods'         => ['POST', 'GET', 'OPTION', 'PATCH', 'PUT', 'DELETE'],
-    'exposedHeaders'         => [],
-    'maxAge'                 => 0,
+    'allowedHeaders' => ['Content-Type', 'X-Requested-With', 'token', 'Origin', 'Accept', 'current-version'],
+    'allowedMethods' => ['POST', 'GET', 'OPTION', 'PATCH', 'PUT', 'DELETE'],
+    'exposedHeaders' => [],
+    'maxAge' => 0,
+
 ];
