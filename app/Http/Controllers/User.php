@@ -23,7 +23,6 @@ class User extends Controller
 //        $user = new \App\User();
         $request->validate();
         $all = Person::all()->toArray();
-
         throw new SuccessMessage(['data' => $all]);
 //        throw new TokenException(['message' => '测试']);
     }
