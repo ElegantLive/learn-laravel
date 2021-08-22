@@ -15,30 +15,35 @@ class BaseException extends Exception
 {
     /**
      * 返回的http状态码
+     *
      * @var int
      */
     protected $status = 200;
 
     /**
      * 错误信息
+     *
      * @var string
      */
     protected $message = 'invalid parameters';
 
     /**
      * 自定义错误码
+     *
      * @var int
      */
     protected $errorCode = 999;
 
     /**
      * 附加数据
+     *
      * @var array
      */
     protected $data = [];
 
     /**
      * 允许携带的附加数据key
+     *
      * @var array
      */
     public $accessKey = [
@@ -47,8 +52,9 @@ class BaseException extends Exception
 
     /**
      * BaseException constructor.
-     * @param array $errorData
-     * @param int $status
+     *
+     * @param array          $errorData
+     * @param int            $status
      * @param Throwable|null $previous
      */
     public function __construct(array $errorData = [], int $status = 0, Throwable $previous = null)
